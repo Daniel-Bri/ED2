@@ -158,7 +158,7 @@ public class GrafoPesado <T extends Comparable<T>>{
         int posDeVerticeOrigen = getPosicionDeVertice(verticeOrigen);
         int posDeVerticeDestino = getPosicionDeVertice(verticeDestino);
         List<AdyacenteConPeso> adyacentesDelOrigen = listaDeAdyacencias.get(posDeVerticeOrigen);
-        AdyacenteConPeso adyacenciaDestino = new AdyacenteConPeso((posDeVerticeDestino);
+        AdyacenteConPeso adyacenciaDestino = new AdyacenteConPeso(posDeVerticeDestino);
         int indiceDeLaAdyacencia = adyacentesDelOrigen.indexOf(adyacenciaDestino);
         adyacenciaDestino = adyacentesDelOrigen.get(indiceDeLaAdyacencia);
         return adyacenciaDestino.getPeso();

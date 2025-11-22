@@ -7,7 +7,7 @@ import java.util.Stack;
 
 public class DFS
 {
-    public DFS(Grafo unGrafo, T verticeInicial){
+    /*public DFS(Grafo unGrafo, T verticeInicial){
         super(unGrafo,verticeInicial);
     }
 
@@ -28,5 +28,5 @@ public class DFS
                     }
                 }
             }while(!pilaDeVertices.isEmpty());
-        }
+        }*/
 }
