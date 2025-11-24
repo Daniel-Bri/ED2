@@ -6,9 +6,10 @@ package main;
 
 import com.danielolmos.proyecto.excepciones.adt.ExcepcionDatoYaExiste;
 import grafos.nopesados.*;
-import grafos.pesados.Dijkstra;
-import grafos.pesados.GrafoPesado;
+import grafos.pesados.*;
 import igu.Pantalla;
+
+import java.util.List;
 
 /**
  *
@@ -20,9 +21,40 @@ public class Proyecto {
         Pantalla panta = new Pantalla();
         panta.setVisible(true);
         panta.setLocationRelativeTo(null); //ponele la pantalla sin referenciaAM*/
-        GrafoPesado<String> grafo = new GrafoPesado<>();
+        GrafoPesado<Integer> grafo = new GrafoPesado<>();
+        grafo.insertarVertice(1);
+        grafo.insertarVertice(2);
+        grafo.insertarVertice(3);
+        grafo.insertarVertice(4);
+        grafo.insertarVertice(5);
+        grafo.insertarVertice(6);
+        grafo.insertarVertice(7);
+        grafo.insertarVertice(8);
+        grafo.insertarVertice(9);
+        grafo.insertarVertice(10);
 
-        grafo.insertarVertice("M");
+
+        grafo.insertarArista(1,2,5);
+        grafo.insertarArista(1,4,8);
+       grafo.insertarArista(1,3,10);
+        grafo.insertarArista(2,6,5);
+        grafo.insertarArista(2,4,6);
+        grafo.insertarArista(3,4,7);
+        grafo.insertarArista(3,5,8);
+        grafo.insertarArista(3,8,15);
+        grafo.insertarArista(4,6,11);
+        grafo.insertarArista(4,5,5);
+        grafo.insertarArista(5,7,4);
+        grafo.insertarArista(5,8,3);
+        grafo.insertarArista(6,7,9);
+        grafo.insertarArista(6,9,7);
+        grafo.insertarArista(7,8,12);
+        grafo.insertarArista(7,9,4);
+        grafo.insertarArista(7,10,6);
+        grafo.insertarArista(8,10,12);
+        grafo.insertarArista(9,10,7);
+
+        /*grafo.insertarVertice("M");
         grafo.insertarVertice("H");
         grafo.insertarVertice("T");
         grafo.insertarVertice("A");
@@ -41,9 +73,50 @@ public class Proyecto {
         grafo.insertarArista("A","K",20);
         grafo.insertarArista("E","K",20);
         grafo.insertarArista("K","H",40);
-        grafo.insertarArista("K","T",70);
+        grafo.insertarArista("K","T",70);*/
 
-        Dijkstra<String> algoritmoDijkstra = new Dijkstra<>(grafo,"M", "K");
+        System.out.println("Hay ciclos: " + grafo.hayCiclos());
+        //lista de kruskal
+        kruskal algoritmoDeKruskal = new kruskal(grafo);
+        List<Arista>  listaKruskal = algoritmoDeKruskal.getListaDeKruskal();
+        for(int i = 0; i < listaKruskal.size(); i++){
+            Arista arista = listaKruskal.get(i);
+            int origen = arista.getOrigen();
+            int destino = arista.getDestino();
+            double peso = arista.getPeso();
+            System.out.println(grafo.getVerticePorPosicion(origen) + " " + grafo.getVerticePorPosicion(destino) + " " + peso);
+
+        }
+
+        GrafoPesado<Integer> grafoKruskal = algoritmoDeKruskal.getArbolDeCostoMinimo();
+
+
+
+
+
+        //matriZ DE GRAFOS PESADOS
+
+        MatrizGrafoPesados<Integer> matrizGrafo1 = new MatrizGrafoPesados<>(grafo);
+        double[][] matriz1 = matrizGrafo1.getMatrizDePesos();
+        System.out.println("Matriz de caminos grafos original:");
+        for (int i = 0; i < matriz1.length; i++) {
+            for (int j = 0; j < matriz1[i].length; j++) {
+                System.out.print(matriz1[i][j] + "  ,  ");
+            }
+            System.out.println();
+        }
+
+        MatrizGrafoPesados<Integer> matrizGrafo = new MatrizGrafoPesados<>(grafoKruskal);
+        double[][] matriz = matrizGrafo.getMatrizDePesos();
+        System.out.println("Matriz de caminos:");
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[i].length; j++) {
+                System.out.print(matriz[i][j] + "  ,  ");
+            }
+            System.out.println();
+        }
+
+        /*Dijkstra<String> algoritmoDijkstra = new Dijkstra<>(grafo,"M", "K");
         System.out.println("El camino es:" + algoritmoDijkstra.getCamino());
         System.out.println("El costo minimo del camino es: " + algoritmoDijkstra.getCostoMinimo());
         System.out.println("Lista predecesores:" + algoritmoDijkstra.getListaPredecesores());

@@ -18,6 +18,8 @@ public class Grafo <T extends Comparable<T>>{
     }
 
 
+
+
     public Grafo(Iterable<T> vertices){
         this();
         for(T unVertice : vertices){
@@ -26,6 +28,18 @@ public class Grafo <T extends Comparable<T>>{
     }
 
     public int getPosicionDeVertice(T unVertice){
+        for(int i = 0; i < listaDeVertices.size(); i++){
+            if(unVertice.compareTo(listaDeVertices.get(i)) == 0){
+                return i;
+            }
+        }
+
+        return POS_DE_VERTICE_INVALIDO;
+    }
+
+
+/*
+    public int getPosicionDeVertice(T unVertice){
         for (int i = 0; i <listaDeVertices.size(); i++){
             T verticeEnTurno = listaDeVertices.get(i);
             if(verticeEnTurno.compareTo(unVertice) == 0){
@@ -33,7 +47,7 @@ public class Grafo <T extends Comparable<T>>{
             }
         }
         return POS_DE_VERTICE_INVALIDO;
-    }
+    }*/
 
     public void validarVertice(T unVertice){
         int posDelVertice = getPosicionDeVertice(unVertice);
@@ -46,14 +60,25 @@ public class Grafo <T extends Comparable<T>>{
         return listaDeVertices.size();
     }
 
-    public void insertarVertice(T unVertice){
+    /*public void insertarVertice(T unVertice){
         int posDeVertice = getPosicionDeVertice(unVertice);
         if(posDeVertice != POS_DE_VERTICE_INVALIDO){
             throw new IllegalArgumentException("El vertice "+ unVertice + " yo existe en su grafo");
         }
         listaDeVertices.add(unVertice);
         listaDeAdyacencias.add(new ArrayList<>());
+    }*/
+
+    public void insertarVertice(T unVertice){
+        int posDeVertice = getPosicionDeVertice(unVertice);
+        if(posDeVertice != POS_DE_VERTICE_INVALIDO){
+            throw new IllegalArgumentException("El vertice " + unVertice + " no existe en su grafo");
+        }
+
+        listaDeVertices.add(unVertice);
+        listaDeAdyacencias.add(new ArrayList<>());
     }
+
 
     public Iterable<T> getVertices(){
         return listaDeVertices;
@@ -70,6 +95,7 @@ public class Grafo <T extends Comparable<T>>{
         }
         return listaDeVerticesAdyacentes;
     }
+
 
     public boolean existeAdyacencia(T verticeOrigen, T verticeDestino){
         validarVertice(verticeOrigen);
@@ -171,6 +197,5 @@ public class Grafo <T extends Comparable<T>>{
     public List<T> ordenamientoTopologico(){
         return new LinkedList<>();
     }
-
 
 }

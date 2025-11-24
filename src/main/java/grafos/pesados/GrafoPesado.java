@@ -2,10 +2,10 @@ package grafos.pesados;
 
 import grafos.excepciones.ExcepcionAristaNoExiste;
 import grafos.excepciones.ExcepcionAristaYaExiste;
+import grafos.nopesados.Grafo;
+import grafos.utils.ControlMarcados;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class GrafoPesado <T extends Comparable<T>>{
     protected List<T> listaDeVertices;
@@ -132,9 +132,9 @@ public class GrafoPesado <T extends Comparable<T>>{
         return cantidaDeAristas;
     }
 
-    public void eliminarArista(T verticeOrigen, T verticeDestino){
-        if(existeAdyacencia(verticeOrigen,verticeDestino)){
-            throw new ExcepcionAristaYaExiste();
+    public void eliminarArista(T verticeOrigen, T verticeDestino) throws ExcepcionAristaNoExiste{
+        if(!existeAdyacencia(verticeOrigen,verticeDestino)){
+            throw new ExcepcionAristaNoExiste();
         }
 
         int posDeVerticeOrigen = getPosicionDeVertice(verticeOrigen);
@@ -162,6 +162,52 @@ public class GrafoPesado <T extends Comparable<T>>{
         int indiceDeLaAdyacencia = adyacentesDelOrigen.indexOf(adyacenciaDestino);
         adyacenciaDestino = adyacentesDelOrigen.get(indiceDeLaAdyacencia);
         return adyacenciaDestino.getPeso();
+    }
+
+    public boolean hayCiclos(){
+        GrafoPesado<T> grafoAux = new GrafoPesado<>();
+        ControlMarcados controlMarcados = new ControlMarcados(this.cantidadDeVertices());
+        Iterable<T> vertices = this.getVertices();
+        for(T vertice : vertices){
+            grafoAux.insertarVertice(vertice);
+        }
+        int posDeVertice = 0;
+        do {
+            T verticeEnTurno = grafoAux.getVerticePorPosicion(posDeVertice);
+
+            this.validarVertice(verticeEnTurno);
+            Stack<Integer> pilaDeVertices = new Stack<>();
+            pilaDeVertices.push(posDeVertice);
+            controlMarcados.marcarVertice(posDeVertice);
+            do{
+                int posDeVerticeAProcesar = pilaDeVertices.pop();
+                //recorrido.add(elGrafo.getVerticePorPosicion(posDeVertice));
+                Iterable<T> adyacentesDelVertice = this.getAdyacentesDeVertices(getVerticePorPosicion(posDeVerticeAProcesar));
+                for (T adyacente : adyacentesDelVertice){
+                    int posDeAdyacente = this.getPosicionDeVertice(adyacente);
+                    if(!controlMarcados.estaVerticeMarcado(posDeAdyacente)){
+                        pilaDeVertices.push(posDeAdyacente);
+                        controlMarcados.marcarVertice(posDeAdyacente);
+                        grafoAux.insertarArista(getVerticePorPosicion(posDeVerticeAProcesar),adyacente, getPeso(getVerticePorPosicion(posDeVerticeAProcesar),adyacente));
+                    }else{
+                        if(!grafoAux.existeAdyacencia(getVerticePorPosicion(posDeVerticeAProcesar),adyacente)){
+                            return true;
+                        }
+                    }
+                }
+            }while(!pilaDeVertices.isEmpty());
+            posDeVertice = posDeVerticeNoMarcado(grafoAux,controlMarcados);
+        }while(posDeVertice != POS_DE_VERTICE_INVALIDO);
+        return false;
+    }
+
+    public int posDeVerticeNoMarcado(GrafoPesado<T> grafoAux, ControlMarcados controlMarcados){
+        for(int i = 0; i < grafoAux.cantidadDeVertices(); i++){
+            if(!controlMarcados.estaVerticeMarcado(i)){
+                return i;
+            }
+        }
+        return POS_DE_VERTICE_INVALIDO;
     }
 
 }
