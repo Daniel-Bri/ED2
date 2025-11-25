@@ -24,4 +24,19 @@ public class MatrizGrafoPesados <T extends Comparable<T>>{
     public double[][] getMatrizDePesos(){
         return matrizDePesos;
     }
+
+    public double[][] getMatrizDeWarshall(){
+        double [][] matrizDeWarshall = matrizDePesos;
+        for (int k = 0; k <= n-1; k++){
+            for(int i = 0; i<= n-1; i++){
+                for (int j = 0; j <= n-1; j++){
+                    if((matrizDeWarshall[i][j]) != 0 || (matrizDeWarshall[i][k] != 0 && matrizDeWarshall[k][j] != 0)){
+                        matrizDeWarshall[i][j] = 1;
+                    }
+                }
+            }
+        }
+        return matrizDeWarshall;
+    }
+
 }

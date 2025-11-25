@@ -10,6 +10,11 @@ public class BFS <T extends Comparable<T>> extends RecorridoGrafo<T>{
 
     @Override
     public void ejecutarRecorrido(T verticeEnTurno) {
+
+    }
+
+
+    /*public void ejecutarRecorrido(T verticeEnTurno) {
         elGrafo.validarVertice(verticeEnTurno);
         int posDelVerticeEnTurno = elGrafo.getPosicionDeVertice(verticeEnTurno);
         Queue<Integer> colaDeVertices = new LinkedList<>();
@@ -28,7 +33,7 @@ public class BFS <T extends Comparable<T>> extends RecorridoGrafo<T>{
             }
 
         }while(!colaDeVertices.isEmpty());
-    }
+    }*/
 
 }
 

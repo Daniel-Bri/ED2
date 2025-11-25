@@ -36,7 +36,7 @@ public class Proyecto {
 
         grafo.insertarArista(1,2,5);
         grafo.insertarArista(1,4,8);
-       grafo.insertarArista(1,3,10);
+        grafo.insertarArista(1,3,10);
         grafo.insertarArista(2,6,5);
         grafo.insertarArista(2,4,6);
         grafo.insertarArista(3,4,7);
@@ -77,8 +77,8 @@ public class Proyecto {
 
         System.out.println("Hay ciclos: " + grafo.hayCiclos());
         //lista de kruskal
-        kruskal algoritmoDeKruskal = new kruskal(grafo);
-        List<Arista>  listaKruskal = algoritmoDeKruskal.getListaDeKruskal();
+        Prim algoritmoDePrim = new Prim(grafo, 1);
+        /*List<Arista>  listaPrim = algoritmoDeKruskal.getListaDeKruskal();
         for(int i = 0; i < listaKruskal.size(); i++){
             Arista arista = listaKruskal.get(i);
             int origen = arista.getOrigen();
@@ -86,11 +86,11 @@ public class Proyecto {
             double peso = arista.getPeso();
             System.out.println(grafo.getVerticePorPosicion(origen) + " " + grafo.getVerticePorPosicion(destino) + " " + peso);
 
-        }
+        }*/
 
-        GrafoPesado<Integer> grafoKruskal = algoritmoDeKruskal.getArbolDeCostoMinimo();
+        GrafoPesado<Integer> grafoPrim = algoritmoDePrim.getPrim();
 
-
+        algoritmoDePrim.mostrarGrafoAuxReal();
 
 
 
@@ -106,9 +106,9 @@ public class Proyecto {
             System.out.println();
         }
 
-        MatrizGrafoPesados<Integer> matrizGrafo = new MatrizGrafoPesados<>(grafoKruskal);
+        MatrizGrafoPesados<Integer> matrizGrafo = new MatrizGrafoPesados<>(grafoPrim);
         double[][] matriz = matrizGrafo.getMatrizDePesos();
-        System.out.println("Matriz de caminos:");
+        System.out.println("Matriz de caminos de kruskal:");
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[i].length; j++) {
                 System.out.print(matriz[i][j] + "  ,  ");

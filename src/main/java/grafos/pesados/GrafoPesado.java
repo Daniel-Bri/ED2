@@ -35,6 +35,15 @@ public class GrafoPesado <T extends Comparable<T>>{
         return POS_DE_VERTICE_INVALIDO;
     }
 
+    public boolean existeVertice(T unVertice){
+        int pos = getPosicionDeVertice(unVertice);
+        if(pos != POS_DE_VERTICE_INVALIDO){
+            return true;
+        }
+        return false;
+
+    }
+
     public void validarVertice(T unVertice){
         int posDelVertice = getPosicionDeVertice(unVertice);
         if(posDelVertice == POS_DE_VERTICE_INVALIDO){
@@ -72,7 +81,9 @@ public class GrafoPesado <T extends Comparable<T>>{
 
     public boolean existeAdyacencia(T verticeOrigen, T verticeDestino){
         validarVertice(verticeOrigen);
-        validarVertice(verticeDestino);
+        if(!existeVertice(verticeDestino)){
+            return false;
+        }
         int posDelVerticeOrigen = getPosicionDeVertice(verticeOrigen);
         int posDelVerticeDestino = getPosicionDeVertice(verticeDestino);
         List<AdyacenteConPeso> adyacentesDelOrigen = listaDeAdyacencias.get(posDelVerticeOrigen);
@@ -210,4 +221,16 @@ public class GrafoPesado <T extends Comparable<T>>{
         return POS_DE_VERTICE_INVALIDO;
     }
 
+    public boolean esConexo(double[][] matrizDeWarshall){
+        double n = matrizDeWarshall.length;
+        boolean banderaConexo = true;
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                if (matrizDeWarshall[i][j] == 0){
+                    banderaConexo = false;
+                }
+            }
+        }
+        return banderaConexo;
+    }
 }
