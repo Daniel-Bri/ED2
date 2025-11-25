@@ -10,7 +10,23 @@ public class BFS <T extends Comparable<T>> extends RecorridoGrafo<T>{
 
     @Override
     public void ejecutarRecorrido(T verticeEnTurno) {
+        elGrafo.validarVertice(verticeEnTurno);
+        int posDeVertice = elGrafo.getPosicionDeVertice(verticeEnTurno);
+        Queue<Integer> colaDeVertices = new LinkedList<>();
+        colaDeVertices.offer(posDeVertice);
+        do{
+            int posDeVerticeAProcesar = colaDeVertices.poll();
+            recorrido.add(elGrafo.getVerticePorPosicion(posDeVerticeAProcesar));
+            Iterable<T> adyacentes = elGrafo.getAdyacentesDeVertices(elGrafo.getVerticePorPosicion(posDeVerticeAProcesar));
+            for(T adyacente : adyacentes){
+                int posAdyacente = elGrafo.getPosicionDeVertice(adyacente);
+                if(!controlMarcados.estaVerticeMarcado(posAdyacente)){
+                    colaDeVertices.offer(posAdyacente);
+                    controlMarcados.marcarVertice(posAdyacente);
+                }
 
+            }
+        }while(!colaDeVertices.isEmpty());
     }
 
 

@@ -7,6 +7,8 @@ package main;
 import com.danielolmos.proyecto.excepciones.adt.ExcepcionDatoYaExiste;
 import grafos.nopesados.*;
 import grafos.pesados.*;
+import grafos.practicaexamen.Pregunta1;
+import grafos.practicaexamen.Pregunta3;
 import igu.Pantalla;
 
 import java.util.List;
@@ -21,7 +23,7 @@ public class Proyecto {
         Pantalla panta = new Pantalla();
         panta.setVisible(true);
         panta.setLocationRelativeTo(null); //ponele la pantalla sin referenciaAM*/
-        GrafoPesado<Integer> grafo = new GrafoPesado<>();
+        DiGrafo<Integer> grafo = new DiGrafo<>();
         grafo.insertarVertice(1);
         grafo.insertarVertice(2);
         grafo.insertarVertice(3);
@@ -33,8 +35,10 @@ public class Proyecto {
         grafo.insertarVertice(9);
         grafo.insertarVertice(10);
 
-
-        grafo.insertarArista(1,2,5);
+        grafo.insertarArista(4,3);
+        grafo.insertarArista(2,6);
+        grafo.insertarArista(7,6);
+        /*grafo.insertarArista(1,2,5);
         grafo.insertarArista(1,4,8);
         grafo.insertarArista(1,3,10);
         grafo.insertarArista(2,6,5);
@@ -52,7 +56,28 @@ public class Proyecto {
         grafo.insertarArista(7,9,4);
         grafo.insertarArista(7,10,6);
         grafo.insertarArista(8,10,12);
-        grafo.insertarArista(9,10,7);
+        grafo.insertarArista(9,10,7);*/
+
+        Pregunta1<Integer> pregunta = new Pregunta1<>(grafo);
+        System.out.println("Cantidad de islas: " + pregunta.cantidadDeIslas());
+
+        Pregunta3<Integer> grafo1 = new Pregunta3<>();
+        grafo1.insertarVertice(1);
+        grafo1.insertarVertice(2);
+        grafo1.insertarVertice(3);
+        grafo1.insertarVertice(4);
+        grafo1.insertarVertice(5);
+        grafo1.insertarVertice(6);
+        grafo1.insertarVertice(7);
+        grafo1.insertarVertice(8);
+        grafo1.insertarVertice(9);
+        grafo1.insertarVertice(10);
+
+        grafo1.insertarArista(1,2);
+        grafo1.insertarArista(4,3);
+        grafo1.insertarArista(2,6);
+        grafo1.insertarArista(7,6);
+        System.out.println("Lista de vertices para llegar a " + 6 + " : " + grafo1.verticesOrigenParaLlegarADestino(6));
 
         /*grafo.insertarVertice("M");
         grafo.insertarVertice("H");
@@ -74,7 +99,7 @@ public class Proyecto {
         grafo.insertarArista("E","K",20);
         grafo.insertarArista("K","H",40);
         grafo.insertarArista("K","T",70);*/
-
+/*
         System.out.println("Hay ciclos: " + grafo.hayCiclos());
         //lista de kruskal
         Prim algoritmoDePrim = new Prim(grafo, 1);
@@ -86,7 +111,7 @@ public class Proyecto {
             double peso = arista.getPeso();
             System.out.println(grafo.getVerticePorPosicion(origen) + " " + grafo.getVerticePorPosicion(destino) + " " + peso);
 
-        }*/
+        }
 
         GrafoPesado<Integer> grafoPrim = algoritmoDePrim.getPrim();
 
@@ -114,7 +139,7 @@ public class Proyecto {
                 System.out.print(matriz[i][j] + "  ,  ");
             }
             System.out.println();
-        }
+        }*/
 
         /*Dijkstra<String> algoritmoDijkstra = new Dijkstra<>(grafo,"M", "K");
         System.out.println("El camino es:" + algoritmoDijkstra.getCamino());
